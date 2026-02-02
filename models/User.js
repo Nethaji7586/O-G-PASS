@@ -24,10 +24,11 @@ const UserSchema = new mongoose.Schema({
   },
 
   phone: {
-    type: String,
-    default: null,
-    unique: true
-  }
+  type: String,
+  unique: true,
+  sparse: true
+}
 });
 
 module.exports = mongoose.model("User", UserSchema);
+
