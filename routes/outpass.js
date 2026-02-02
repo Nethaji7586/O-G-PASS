@@ -160,4 +160,35 @@ router.get("/students", auth, staffOnly, async (req, res) => {
 
 
 
+// Get all reached students with actualInTime
+router.get("/delay", auth, staffOnly, async (req, res) => {
+  try {
+    const reachedOutpasses = await Outpass.find({ reached: true })
+      .populate("student", "name email phone")
+      .sort({ actualInTime: -1 });
+
+    const result = reachedOutpasses.map(op => ({
+      outpassId: op._id,
+      studentId: op.student?._id,
+      name: op.student?.name,
+      email: op.student?.email,
+      phone: op.student?.phone || null,
+      reason: op.reason,
+      outTime: op.outTime,
+      inTime: op.inTime,
+      actualInTime: op.actualInTime,
+      delayMinutes: op.delayMinutes,
+      status: op.status
+    }));
+
+    res.json(result);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
+
  module.exports = router;
