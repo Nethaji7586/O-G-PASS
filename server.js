@@ -19,7 +19,6 @@ mongoose
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/outpass", require("./routes/outpass"));
 app.use("/api/student", require("./routes/student"));
-app.use("/api/notifications", require("./routes/notification"));
 
 
 app.get("/test", (req, res) => {
